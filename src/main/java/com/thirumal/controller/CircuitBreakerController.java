@@ -30,9 +30,6 @@ public class CircuitBreakerController {
 	@GetMapping("")
     @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "example", fallbackMethod = "fallback")
     public ResponseEntity<String> simulateDelay(@RequestParam int delay) throws InterruptedException {
-		if (delay > 5) {
-	        throw new RuntimeException("Simulated failure for delay > 5 seconds");
-	    }
 		Thread.sleep(delay * 1000L);
         
         return ResponseEntity.ok("Response after " + delay + " seconds");
