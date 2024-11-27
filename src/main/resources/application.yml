@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: circuit-breaker
+resilience4j:
+  circuitbreaker:
+    configs:
+      example:
+        minimumNumberOfCalls: 3
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5000
+        slidingWindowSize: 5	
+        slidingWindowType: COUNT_BASED
+        record-exceptions:
+          - java.lang.Exception	
+        ignore-exceptions:
+          - org.springframework.web.client.HttpClientErrorException$NotFound
+logging:
+  level:
+    '[io.github.resilience4j.circuitbreaker]': DEBUG
+    '[org.springframework.cloud.circuitbreaker]': DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
